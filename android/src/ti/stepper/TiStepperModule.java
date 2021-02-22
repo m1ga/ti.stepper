@@ -77,7 +77,8 @@ public class TiStepperModule
 		registerSensors();
 	}
 
-	private void registerSensors()
+	@Kroll.method
+	public void registerSensors()
 	{
 		if (!isAvailable()) {
 			Log.e(LCAT, "No sensors available");
@@ -86,7 +87,8 @@ public class TiStepperModule
 
 		Activity activity = TiApplication.getAppRootOrCurrentActivity();
 		if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACTIVITY_RECOGNITION)
-			== PackageManager.PERMISSION_DENIED) {
+				== PackageManager.PERMISSION_DENIED) {
+			Log.i(LCAT,"permission request");
 			ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.ACTIVITY_RECOGNITION }, 1);
 		} else {
 			sensorManager.registerListener(this, senStepCounter, SensorManager.SENSOR_DELAY_NORMAL);
@@ -95,7 +97,8 @@ public class TiStepperModule
 		}
 	}
 
-	private void unRegisterSensors()
+	@Kroll.method
+	public void unregisterSensors()
 	{
 		if (!isAvailable()) {
 			return;
@@ -104,18 +107,6 @@ public class TiStepperModule
 		sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER));
 		sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR));
 		sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
-	}
-
-	@Kroll.method
-	public void registerSensor()
-	{
-		registerSensors();
-	}
-
-	@Kroll.method
-	public void unregisterSensor()
-	{
-		unRegisterSensors();
 	}
 
 	public static boolean isAvailable()

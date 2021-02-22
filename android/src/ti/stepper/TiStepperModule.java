@@ -19,6 +19,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import org.appcelerator.kroll.KrollDict;
@@ -77,6 +78,7 @@ public class TiStepperModule
 		registerSensors();
 	}
 
+	@RequiresApi(api = Build.VERSION_CODES.M)
 	@Kroll.method
 	public void registerSensors()
 	{
@@ -89,7 +91,7 @@ public class TiStepperModule
 		if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACTIVITY_RECOGNITION)
 				== PackageManager.PERMISSION_DENIED) {
 			Log.i(LCAT,"permission request");
-			ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.ACTIVITY_RECOGNITION }, 1);
+			activity.requestPermissions( new String[] { Manifest.permission.ACTIVITY_RECOGNITION }, 1);
 		} else {
 			sensorManager.registerListener(this, senStepCounter, SensorManager.SENSOR_DELAY_NORMAL);
 			sensorManager.registerListener(this, senStepDetector, SensorManager.SENSOR_DELAY_NORMAL);

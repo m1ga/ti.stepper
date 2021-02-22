@@ -1,0 +1,17 @@
+.DS_Store
+/Resources
+/platform
+/i18n
+build.log
+build
+npm-debug.log
+tmp
+.map
+.project
+.settings
+Thumbs.db
+android/build/
+android/libs
+android/java-sources.txt
+android/build.properties
+.DS_Store

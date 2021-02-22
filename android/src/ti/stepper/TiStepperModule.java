@@ -64,7 +64,7 @@ public class TiStepperModule
 	@Kroll.method
 	public void create()
 	{
-		sensorManager = (SensorManager) TiApplication.getAppCurrentActivity().getSystemService(SENSOR_SERVICE);
+		sensorManager = (SensorManager) TiApplication.getAppRootOrCurrentActivity().getSystemService(SENSOR_SERVICE);
 
 		// Reference/Assign the sensors
 
@@ -84,7 +84,7 @@ public class TiStepperModule
 			return;
 		}
 
-		Activity activity = TiApplication.getInstance().getCurrentActivity();
+		Activity activity = TiApplication.getAppRootOrCurrentActivity();
 		if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACTIVITY_RECOGNITION)
 			== PackageManager.PERMISSION_DENIED) {
 			ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.ACTIVITY_RECOGNITION }, 1);
@@ -120,7 +120,7 @@ public class TiStepperModule
 
 	public static boolean isAvailable()
 	{
-		PackageManager pm = TiApplication.getAppCurrentActivity().getPackageManager();
+		PackageManager pm = TiApplication.getAppRootOrCurrentActivity().getPackageManager();
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
 			&& pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_STEP_COUNTER)
 			&& pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_STEP_DETECTOR);
